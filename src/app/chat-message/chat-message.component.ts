@@ -62,10 +62,8 @@ export class ChatMessageComponent implements OnInit, OnDestroy, AfterViewChecked
 
   scrollToBottom(): void {
     try {
-      console.log('test scro;;jp[ooooooo');
       this.messenger.nativeElement.scrollTop = this.messenger.nativeElement.scrollHeight;
     } catch (ee) {
-      console.log('tlôiioiooioooooo');
     }
   }
 findAccountById() {

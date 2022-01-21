@@ -5030,17 +5030,19 @@ canvas {
     width: 100%;
 }
 
-.chat-list > ul li.you .chat-thumb {
+.chat-list > ul li div.you .chat-thumb {
     float: right;
 }
 
-.chat-list > ul li.you .notification-event {
+.chat-list > ul li div.you .notification-event {
     float: right;
     margin-left: 0;
     margin-right: 8px;
 }
 
-.chat-list > ul li.you .chat-message-item {
+.chat-list > ul li div.you .chat-message-item {
+    text-align: right;
+    color: #00ccff;
     background: rgba(202, 239, 142, 0.55) none repeat scroll 0 0;
 }
 

@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewChecked, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {TokenService} from '../service/token/token.service';
 import {ChangePasswordComponent} from '../form-login/change-password/change-password.component';
@@ -15,13 +15,18 @@ import {ChatService} from '../service/chat-message/chat.service';
 import {ProfileService} from '../profile/service/profile.service';
 import {AccountDetail} from '../profile/model/account-detail';
 import {NotificationSocketService} from '../notification/service/socket/notification-socket.service';
+import {MessageAccountResponse} from '../model/chat/MessageAccountResponse';
+import {Message} from '../model/chat/Message';
+import {SocketService} from '../service/socket/socket.service';
+import {FormControl, FormGroup} from '@angular/forms';
 
 @Component({
   selector: 'app-nav-bar2',
   templateUrl: './nav-bar2.component.html',
   styleUrls: ['./nav-bar2.component.scss']
 })
-export class NavBar2Component implements OnInit {
+export class NavBar2Component implements OnInit, AfterViewChecked {
+  @ViewChild('messenger') public messenger: ElementRef;
   id = window.sessionStorage.getItem('Id_Key');
   searchName = '';
 // error for changePassword
@@ -31,7 +36,7 @@ export class NavBar2Component implements OnInit {
   error2: any = {
     message: 'success'
   };
-  // error for update info
+// error for update info
 
   error3: any = {
     message: 'yes'
@@ -61,6 +66,20 @@ export class NavBar2Component implements OnInit {
   private listPending: AccountDetail[];
   private sumPending: number;
 
+  messageAccount: MessageAccountResponse;
+  messageAccounts: MessageAccountResponse[];
+  messageDetail: Message[];
+  idAccount = this.tokenService.getIdKey();
+  avatarAccountChat: string;
+  nameAccountChat: string;
+
+  messageForm: FormGroup = new FormGroup( {
+    content: new FormControl(),
+    dateSend: new FormControl(),
+    idSender: new FormControl(),
+    idReceiver: new FormControl()
+  });
+
   constructor(
     private router: Router,
     private tokenService: TokenService,
@@ -69,11 +88,18 @@ export class NavBar2Component implements OnInit {
     private notificationService: NotificationService,
     private chatService: ChatService,
     private profileService: ProfileService,
-    private notifiSocket: NotificationSocketService
+    private notifiSocket: NotificationSocketService,
+    private messageService: ChatService,
+    private socketService: SocketService
   ) {
   }
 
+  ngAfterViewChecked(): void {
+    this.scrollToBottom();
+  }
+
   ngOnInit(): void {
+    this.getListMessenger();
     if (this.tokenService.getToken()) {
       this.isCheckLogin = true;
       this.name = this.tokenService.getName();
@@ -84,7 +110,58 @@ export class NavBar2Component implements OnInit {
     this.showListPending();
     this.notifiSocket.connect();
   }
+  scrollToBottom(): void {
+    try {
+      this.messenger.nativeElement.scrollTop = this.messenger.nativeElement.scrollHeight;
+    } catch (ee) {
+      console.log('iugfudutidxtrjyuitrrdutiyutrutyrsdyjfukgi')
+    }
+  }
+  createMessage() {
+    this.messageForm.value.dateSend = Date.now().toString();
+    this.messageForm.value.idSender = this.idAccount;
+    this.messageForm.value.idReceiver = this.messageAccount.idSender;
+    this.socketService.createProductUsingWs(this.messageForm.value);
+    this.messageForm.value.content = '';
+    // this.messageService.showChatLogById(this.chatMessageAccount.idSender).subscribe(data => {
+    //   this.messageDetail = data;
+    //   this.scrollBottom();
+    // });
+    this.scrollToBottom();
+    this.messageForm.controls.content.reset();
+  }
+  getListMessenger(){
+    this.messageService.getListMessageByAccountId().subscribe(data => {
+      this.messageService.showChatLogById(data[0].idSender).subscribe(detail => {
+        this.messageAccounts = data;
+        this.messageAccount = this.messageAccounts[0];
+        this.messageDetail = detail;
 
+      });
+    });
+  }
+  findAccountById(id) {
+    this.profileService.findAccountById(id).subscribe(data => {
+      this.avatarAccountChat = data.avatar;
+      this.nameAccountChat  = data.name;
+    });
+  }
+  showChatLogById(messageAccount: MessageAccountResponse) {
+    this.findAccountById(messageAccount.idSender);
+    this.socketService.disconnect();
+    this.messageService.showChatLogById(messageAccount.idSender).subscribe(data => {
+      this.messageAccount = this.messageAccounts[this.messageAccounts.indexOf(messageAccount)];
+      this.messageDetail = data;
+      this.socketService.List = this.messageDetail;
+    });
+    // this.scrollToBottom();
+    console.log('ket qua la chat-messenger1' + messageAccount.idSender);
+    console.log('ket qua la chat-messenger1' + this.idAccount);
+    this.socketService.connect(this.idAccount, messageAccount.idSender);
+    console.log('ket qua la chat-messenger2' + messageAccount.idSender);
+    console.log('ket qua la chat-messenger2' + this.idAccount);
+    document.querySelector('.chat-box').classList.add('show');
+  }
   logout(): void {
     window.sessionStorage.clear();
     this.router.navigate(['login']).then(() => {
@@ -94,7 +171,7 @@ export class NavBar2Component implements OnInit {
 
   UserSettingToggle(): void {
     alert(this.userSettings);
-    // @ts-ignore
+// @ts-ignore
   }
 
   openDialogChangePassword() {
@@ -177,7 +254,7 @@ export class NavBar2Component implements OnInit {
       console.log('trong sub');
       this.notifications = data;
       this.notifiSocket.List = this.notifications;
-      // tslint:disable-next-line:prefer-for-of
+// tslint:disable-next-line:prefer-for-of
       for (let i = 0; i < data.length; i++) {
         if (data[i].status === false) {
           this.countNewNotification = this.countNewNotification + 1;
