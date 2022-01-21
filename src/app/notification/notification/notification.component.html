@@ -1,0 +1,38 @@
+
+    <ul class="drops-menu" *ngFor="let notification of notifications">
+        <li (click)="getPostingId(notification)" data-toggle="modal" data-target="#blog-popup">
+            <a>
+                <figure>
+                    <img style="width: 40px; height: 40px" [src]="notification.sender.avatar" alt="">
+                    <span class="status f-online"></span>
+                </figure>
+                <div class="mesg-meta">
+                    <h6>{{notification.sender.name}}</h6>
+                    <div *ngIf="notification.type === 2">
+                        <div *ngIf="notification.status; else elseBlock">
+                            <span> {{notification.content}}</span>
+                            <span *ngIf="notification.posting.owner.id === currentId" >bạn</span>
+                            <span *ngIf="notification.posting.owner.id !== notification.account.id" >{{notification.posting.owner.name}}</span>
+                        </div>
+                        <ng-template #elseBlock>
+                            <strong> {{notification.content}}</strong>
+                            <strong *ngIf="notification.posting.owner.id === currentId" >bạn</strong>
+                            <strong *ngIf="notification.posting.owner.id !== notification.account.id" >{{notification.posting.owner.name}}</strong>
+                        </ng-template>
+                    </div>
+                    <div *ngIf="notification.type === 1">
+                        <div *ngIf="notification.status; else elseBlock">
+                            <span> {{notification.content}}</span>
+                        </div>
+                        <ng-template #elseBlock>
+                            <strong> {{notification.content}}</strong>
+                        </ng-template>
+                    </div>
+
+
+                    <i>{{notification.date}}</i>
+                </div>
+<!--                <a (click)="delete(notification.id)" style="right: 0" title=""><i class="fa fa-trash"></i></a>-->
+            </a>
+        </li>
+    </ul>

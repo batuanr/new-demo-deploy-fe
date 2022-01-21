@@ -1,0 +1,14 @@
+       <mat-label>Choose single or multiple images to upload!</mat-label>
+        <input type="file" class="form-control" id="inputGroupFile01" (change)="onFileChange($event)">
+        <mat-spinner [diameter]="30" class="text-center" *ngIf="checkUpLoadFile"></mat-spinner>
+        <div *ngFor="let img of images; let i = index" style="margin-bottom: 10px; margin-top: 10px">
+            <form>
+                <div style="position:relative;">
+                    <button type="submit" (click)="deleteImg(i)" class="close" style="right:0px; position: absolute;">
+                        <span>&times;</span>
+                    </button>
+                    <img [src]="img" style="width: 300px; height: auto">
+                </div>
+            </form>
+        </div>
+

@@ -1,0 +1,104 @@
+<div class="theme-layout">
+    <section>
+        <div class="gap2 gray-bg">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="row merged20" id="page-contents">
+                            <div class="col-lg-12">
+                                <div class="central-meta">
+                                    <div class="title-block">
+                                        <div class="row">
+                                            <div class="col-lg-6" *ngIf="!(isShow == false && check == false)">
+                                                <div class="align-left">
+                                                    <h5 (click)="getListFriend()">Friends <span>{{sumFriend}}</span>
+                                                    </h5>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4" *ngIf="check == false && isShow == false">
+                                                <div class="align-content-center">
+                                                    <h5>Người dùng đã ẩn bạn bè</h5>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4" *ngIf="!(check == true || isShow == false)">
+                                                <div class="align-right">
+                                                    <h5 (click)="mutualFriends()">List of mutual
+                                                        friends: {{sumMutualFriends}}</h5>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3" *ngIf="check == true">
+                                                <section class="example-section">
+                                                    <mat-checkbox class="example-margin" [(ngModel)]="isShow"
+                                                                  (change)="checkIsShow()">Show List Friends
+                                                    </mat-checkbox>
+                                                </section>
+                                            </div>
+
+                                            <!--                                            <div class="col-lg-6">-->
+                                            <!--                                                <div class="row merged20">-->
+                                            <!--                                                    <div class="col-lg-7 col-lg-7 col-sm-7">-->
+                                            <!--                                                        <form method="post">-->
+                                            <!--                                                            <input type="text" placeholder="Search Friend">-->
+                                            <!--                                                            <button type="submit"><i class="fa fa-search"></i></button>-->
+                                            <!--                                                        </form>-->
+                                            <!--                                                    </div>-->
+                                            <!--                                                </div>-->
+                                            <!--                                            </div>-->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="central-meta padding30">
+                                    <div class="row" *ngIf="!(isShow == false && check == false)">
+                                        <div *ngFor="let element of friends">
+                                            <div class="col-lg-3 col-md-6 col-sm-6">
+                                                <div class="friend-box">
+                                                    <figure>
+                                                        <img src="../../../assets/images/resources/frnd-cover1.jpg"
+                                                             alt="">
+                                                    </figure>
+                                                    <div class="frnd-meta">
+                                                        <img [src]="element.avatar" alt="avatar">
+                                                        <div class="frnd-name">
+                                                            <a (click)="navigateToProfile(element.id)">{{element.name}}</a>
+                                                        </div>
+                                                        <ul class="frnd-info">
+                                                            <li *ngIf="element.phone">
+                                                                <span>Phone:{{element.phone}}</span></li>
+                                                            <li *ngIf="element.address">
+                                                                <span>Address:{{element.address}}</span></li>
+                                                            <li *ngIf="element.email">
+                                                                <span>Email:{{element.email}}</span></li>
+                                                            <li *ngIf="element.hobbies">
+                                                                <span>Hobbies:</span> {{element.hobbies}}</li>
+                                                            <li *ngIf="element.gender">
+                                                                <span>Gender:</span> {{element.gender.gender}}</li>
+                                                        </ul>
+                                                        <a class="send-mesg" href="#" title="">Message</a>
+                                                        <div class="more-opotnz">
+                                                            <i class="fa fa-ellipsis-h"></i>
+                                                            <ul>
+                                                                <li><a (click)="deleteFriend(element.id)">Xóa Bạn</a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                    <!--                                    <div class="lodmore">-->
+                                    <!--                                        <span>Viewing 1-8 of 44 friends</span>-->
+                                    <!--                                        <button class="btn-view btn-load-more"></button>-->
+                                    <!--                                    </div>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+

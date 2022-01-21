@@ -1,0 +1,94 @@
+<div class="messenger-ba">
+    <section>
+        <div class="gap2 no-gap gray-bg">
+            <div class="container-fluid no-padding">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="message-users">
+                            <div class="message-head">
+                                <h4>Chat Messages</h4>
+                                <div class="more">
+                                    <div class="more-post-optns"><i class="ti-settings"></i>
+                                        <ul>
+                                            <li><i class="fa fa-wrench"></i>Setting</li>
+                                            <li><i class="fa fa-envelope-open"></i>Active Contacts</li>
+                                            <li><i class="fa fa-folder-open"></i>Archives Chats</li>
+                                            <li><i class="fa fa-eye-slash"></i>Unread Chats</li>
+                                            <li><i class="fa fa-flag"></i>Report a problem</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="message-people-srch">
+                                <form method="post">
+                                    <input type="text" placeholder="Search Friend..">
+                                    <button type="submit"><i class="fa fa-search"></i></button>
+                                </form>
+                                <div class="btn-group add-group" role="group">
+                                    <button id="btnGroupDrop2" type="button"
+                                            class="btn group dropdown-toggle user-filter" data-toggle="dropdown"
+                                            aria-haspopup="true" aria-expanded="false">
+                                        All
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop2">
+                                        <a class="dropdown-item" href="#">Online</a>
+                                        <a class="dropdown-item" href="#">Away</a>
+                                        <a class="dropdown-item" href="#">unread</a>
+                                        <a class="dropdown-item" href="#">archive</a>
+                                    </div>
+                                </div>
+                                <div class="btn-group add-group align-right" role="group">
+                                    <button id="btnGroupDrop1" type="button" class="btn group dropdown-toggle"
+                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Create+
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                        <a class="dropdown-item" href="#">New user</a>
+                                        <a class="dropdown-item" href="#">New Group +</a>
+                                        <a class="dropdown-item" href="#">Private Chat +</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- show chat friend-->
+
+                            <div class="mesg-peple">
+                                <ul class="nav nav-tabs nav-tabs--vertical msg-pepl-list">
+                                    <li *ngFor="let messageAccount of messageAccounts" class="nav-item unread">
+                                        <a (click)="showChatLogById(messageAccount)" class="active" href="#link1" data-toggle="tab">
+                                            <figure><img src="{{messageAccount.avatar}}" alt="">
+                                                <span class="status f-online"></span>
+                                            </figure>
+                                            <div class="user-name">
+                                                <h6 class="">{{messageAccount.name}}</h6>
+                                                <span>you send a video - 2hrs ago</span>
+                                            </div>
+                                            <div class="more">
+                                                <div class="more-post-optns"><i class="ti-more-alt"></i>
+                                                    <ul>
+                                                        <li><i class="fa fa-bell-slash-o"></i>Mute</li>
+                                                        <li><i class="ti-trash"></i>Delete</li>
+                                                        <li><i class="fa fa-folder-open-o"></i>Archive</li>
+                                                        <li><i class="fa fa-ban"></i>Block</li>
+                                                        <li><i class="fa fa-eye-slash"></i>Ignore Message</li>
+                                                        <li><i class="fa fa-envelope"></i>Mark Unread</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </div>
+
+
+                        </div>
+
+                        <!-- showchat message -->
+                            <app-chat-message [chatMessageAccount]="messageAccount" [messageDetail]="messageDetail" ></app-chat-message>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

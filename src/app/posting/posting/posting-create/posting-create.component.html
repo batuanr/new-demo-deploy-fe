@@ -1,0 +1,85 @@
+<div class="central-meta postbox">
+    <span class="create-post">Create post</span>
+
+    <div class="new-postbox">
+        <figure>
+            <img style="width: 45px; height: 45px" src="{{avatar}}" alt="">
+        </figure>
+        <form #f="ngForm" (ngSubmit)="f.form.valid" novalidate>
+        <div class="newpst-input">
+                <div class="dropdown">
+                    <mat-form-field appearance="fill">
+                        <mat-select [(ngModel)]="form.select"  name="select" matNativeControl required>
+                            <mat-option *ngFor="let status of postingStatusTypes" [value]="status.id">{{status.type}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+                <textarea rows="2" placeholder="Share some what you are thinking?" [(ngModel)]="form.content" name="content" required></textarea>
+
+        </div>
+        <div class="attachments">
+            <ul>
+                <li>
+													<span class="add-loc">
+														<i class="fa fa-map-marker"></i>
+													</span>
+                </li>
+                <li>
+                    <i class="fa fa-music"></i>
+                    <label class="fileContainer">
+                        <input type="file">
+                    </label>
+                </li>
+                <li>
+                    <i class="fa fa-image" (click)="openDialog()"></i>
+                    <label class="fileContainer">
+                    </label>
+                </li>
+                <li>
+                    <i class="fa fa-video-camera"></i>
+                    <label class="fileContainer">
+                        <input type="file">
+                    </label>
+                </li>
+                <li>
+                    <i class="fa fa-camera"></i>
+                    <label class="fileContainer">
+                        <input type="file">
+                    </label>
+                </li>
+                <li class="preview-btn">
+                    <button class="post-btn-preview" type="submit" data-ripple="">Preview</button>
+                </li>
+            </ul>
+            <div *ngFor="let img of urls; let i = index" style="margin-bottom: 10px; margin-top: 10px; display:inline-block;">
+                <form>
+                    <div style="position:relative;">
+                        <button type="submit" (click)="deleteImg(i)" class="close" style="right:0px; position: absolute;">
+                            <span>&times;</span>
+                        </button>
+                        <img width="200px" [src]="img" style="width: 100px; height: auto">
+                    </div>
+                </form>
+            </div>
+            <button class="post-btn" (click)="ngSubmit()" type="submit" data-ripple="">Post</button>
+        </div>
+
+        </form>
+        <div class="add-location-post">
+            <span>Drag map point to selected area</span>
+            <div class="row">
+
+                <div class="col-lg-6">
+                    <label class="control-label">Lat :</label>
+                    <input type="text" class="" id="us3-lat" />
+                </div>
+                <div class="col-lg-6">
+                    <label>Long :</label>
+                    <input type="text" class="" id="us3-lon" />
+                </div>
+            </div>
+            <!-- map -->
+            <div id="us3"></div>
+        </div>
+    </div>
+</div>

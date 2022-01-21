@@ -1,0 +1,201 @@
+<div *ngIf="isProfile === false">
+    <div *ngIf="posting.postingStatusType.type === 'Private' && posting.owner.id === idLogging || posting.postingStatusType.type !== 'Private' && relationshipStatus === 2 || relationshipStatus === 0 && idLogging === posting.owner.id" class="central-meta item">
+        <div class="user-post">
+            <div class="friend-info">
+                <figure>
+                    <img src="{{posting.owner.avatar}}" alt="">
+                </figure>
+                <div class="friend-name">
+                    <div class="more">
+                        <div class="more-post-optns"><i class="ti-more-alt"></i>
+                            <ul>
+                                <li *ngIf="posting.owner.id === idLogging" (click)="openDialogEdit()"><i class="fa fa-pencil-square-o" (click)="openDialogEdit()"></i>Edit Post</li>
+                                <li *ngIf="posting.owner.id === idLogging" (click)="openDialogDelete()"><i class="fa fa-trash-o" (click)="openDialogDelete()"></i>Delete Post</li>
+                                <li class="bad-report"><i class="fa fa-flag"></i>Report Post</li>
+                                <li *ngIf="posting.owner.id === idLogging"><i class="fa fa-address-card-o"></i>Boost This Post</li>
+                                <li *ngIf="posting.owner.id === idLogging"><i class="fa fa-clock-o"></i>Schedule Post</li>
+                                <li *ngIf="posting.owner.id === idLogging"><i class="fa fa-wpexplorer"></i>Select as featured</li>
+                                <li><i class="fa fa-bell-slash-o"></i>Turn off Notifications</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <ins><a (click)="navigateProfile(posting.owner.id)" title="">{{posting.owner.name}}</a></ins>
+                    <span><i *ngIf="posting.postingStatusType.id === 1" class="fa fa-globe"></i><i class="fa fa-lock" *ngIf="posting.postingStatusType.id === 2"></i><i class="fa fa-users" *ngIf="posting.postingStatusType.id === 3" style="font-size: 12px"></i> published: {{posting.dateOfPosting}} </span>
+                </div>
+                <div class="post-meta">
+                    <p>
+                        {{posting.content}}
+                    </p>
+                    <figure>
+                        <div class="img-bunch">
+                            <div class="row">
+                                <div *ngFor="let img of posting._imagesArray" class="col-lg-6 col-md-6 col-sm-6">
+                                    <figure>
+                                        <a class="strip" href="{{img}}" title="" data-strip-group="mygroup"
+                                           data-strip-group-options="loop: false">
+                                            <img src="{{img}}" alt="">
+                                        </a>
+                                    </figure>
+                                </div>
+                            </div>
+                        </div>
+                    </figure>
+                    <div class="we-video-info">
+                        <ul>
+                            <li>
+                                <div *ngIf="isLiked === false">
+                                    <div (click)="likePost(posting)" class="likes heart" title="Like/Dislike">❤ <span
+                                            [(ngModel)]="like">{{like}}</span></div>
+                                </div>
+                                <div *ngIf="isLiked === true">
+                                    <div (click)="likePost(posting)" class="likes heart" style="color: orangered" title="Like/Dislike">❤ <span
+                                            [(ngModel)]="like">{{like}}</span></div>
+                                </div>
+
+                            </li>
+                            <li>
+                                                                        <span (click)="getAllComments(posting.id)" class="comment" title="Comments">
+                                                                            <i class="fa fa-commenting"></i>
+                                                                            <ins>{{posting.commentNumber}}</ins>
+                                                                        </span>
+                            </li>
+
+                            <li>
+                                                                        <span>
+                                                                            <a class="share-pst" href="#" title="Share">
+                                                                                <i class="fa fa-share-alt"></i>
+                                                                            </a>
+                                                                            <ins>20</ins>
+                                                                        </span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="coment-area" style="display: block;">
+                    <ul class="we-comet">
+                        <div *ngFor="let comment of comments">
+                            <app-comment (idCommentDelete)="deleteComment($event)" [comment]="comment"></app-comment>
+                        </div>
+
+                        <li>
+                            <a (click)="getAllComments(posting.id)" title="" class="showmore underline">more comments+</a>
+                        </li>
+                        <li class="post-comment">
+                            <div class="comet-avatar">
+                                <img src="{{avatarLogging}}" alt="">
+                            </div>
+                            <div class="post-comt-box">
+                                <form #f="ngForm" (ngSubmit)="onSubmit()">
+                                    <textarea placeholder="Post your comment" [(ngModel)]="form.content" #content="ngModel" name="content"></textarea>
+                                    <button style="color:black;" type="submit">Send</button>
+                                </form>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!------Profile---------->
+<div *ngIf="isProfile === true">
+    <div *ngIf="posting.owner.id === idProfileFinal && idProfileFinal !== idLogging && posting.postingStatusType.type !== 'Private' && relationshipStatus === 2 || idProfileFinal === idLogging && posting.owner.id === idProfileFinal || posting.owner.id === idProfileFinal && idProfileFinal !== idLogging && posting.postingStatusType.type === 'Public' && relationshipStatus === 0" class="central-meta item">
+        <div class="user-post">
+            <div class="friend-info">
+                <figure>
+                    <img src="{{posting.owner.avatar}}" alt="">
+                </figure>
+                <div class="friend-name">
+                    <div class="more">
+                        <div class="more-post-optns"><i class="ti-more-alt"></i>
+                            <ul>
+                                <li *ngIf="posting.owner.id === idLogging" (click)="openDialogEdit()"><i class="fa fa-pencil-square-o" (click)="openDialogEdit()"></i>Edit Post</li>
+                                <li *ngIf="posting.owner.id === idLogging" (click)="openDialogDelete()"><i class="fa fa-trash-o" (click)="openDialogDelete()"></i>Delete Post</li>
+                                <li class="bad-report"><i class="fa fa-flag"></i>Report Post</li>
+                                <li *ngIf="posting.owner.id === idLogging"><i class="fa fa-address-card-o"></i>Boost This Post</li>
+                                <li *ngIf="posting.owner.id === idLogging"><i class="fa fa-clock-o"></i>Schedule Post</li>
+                                <li *ngIf="posting.owner.id === idLogging"><i class="fa fa-wpexplorer"></i>Select as featured</li>
+                                <li><i class="fa fa-bell-slash-o"></i>Turn off Notifications</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <ins><a style="cursor: pointer" (click)="navigateProfile(posting.owner.id)" title="">{{posting.owner.name}}</a></ins>
+                    <span><i *ngIf="posting.postingStatusType.id === 1" class="fa fa-globe"></i><i class="fa fa-lock" *ngIf="posting.postingStatusType.id === 2"></i><i class="fa fa-users" *ngIf="posting.postingStatusType.id === 3" style="font-size: 12px"></i> published: {{posting.dateOfPosting}} </span>
+                </div>
+                <div class="post-meta">
+                    <p>
+                        {{posting.content}}
+                    </p>
+                    <figure>
+                        <div class="img-bunch">
+                            <div class="row">
+                                <div *ngFor="let img of posting._imagesArray" class="col-lg-6 col-md-6 col-sm-6">
+                                    <figure>
+                                        <a class="strip" href="{{img}}" title="" data-strip-group="mygroup"
+                                           data-strip-group-options="loop: false">
+                                            <img src="{{img}}" alt="">
+                                        </a>
+                                    </figure>
+                                </div>
+                            </div>
+                        </div>
+                    </figure>
+                    <div class="we-video-info">
+                        <ul>
+                            <li>
+                                <div *ngIf="isLiked === false">
+                                    <div (click)="likePost(posting.id)" class="likes heart" title="Like/Dislike">❤ <span
+                                            [(ngModel)]="like">{{like}}</span></div>
+                                </div>
+                                <div *ngIf="isLiked === true">
+                                    <div (click)="likePost(posting.id)" class="likes heart" style="color: orangered" title="Like/Dislike">❤ <span
+                                            [(ngModel)]="like">{{like}}</span></div>
+                                </div>
+
+                            </li>
+                            <li>
+                                                                        <span (click)="getAllComments(posting.id)" class="comment" title="Comments">
+                                                                            <i class="fa fa-commenting"></i>
+                                                                            <ins>{{posting.commentNumber}}</ins>
+                                                                        </span>
+                            </li>
+
+                            <li>
+                                                                        <span>
+                                                                            <a class="share-pst" href="#" title="Share">
+                                                                                <i class="fa fa-share-alt"></i>
+                                                                            </a>
+                                                                            <ins>20</ins>
+                                                                        </span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="coment-area" style="display: block;">
+                    <ul class="we-comet">
+                        <div *ngFor="let comment of comments">
+                            <app-comment (idCommentDelete)="deleteComment($event)" [comment]="comment"></app-comment>
+                        </div>
+
+                        <li>
+                            <a (click)="getAllComments(posting.id)" style="cursor: pointer" title="" class="showmore underline">more comments+</a>
+                        </li>
+                        <li class="post-comment">
+                            <div class="comet-avatar">
+                                <img src="{{avatarLogging}}" alt="">
+                            </div>
+                            <div class="post-comt-box">
+                                <form #f="ngForm" (ngSubmit)="onSubmit()">
+                                    <textarea placeholder="Post your comment" [(ngModel)]="form.content" #content="ngModel" name="content"></textarea>
+                                    <button style="color:black;" type="submit">Send</button>
+                                </form>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,100 @@
+<div class="www-layout">
+    <section>
+        <div class="gap no-gap signin whitish medium-opacity register">
+            <div class="bg-image" style="background-image:url(../../../assets/images/resources/theme-bg.jpg)"></div>
+   
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="big-ad">
+                            <figure><img style="width: 200px; height: 200px;"  src="../../assets/images/logosIShareLife2/logoIShareLifeMain.png" alt=""></figure>
+                            <h1>Welcome to the iShareLife</h1>
+                            <p>
+                                iShareLife is a social network template that can be used to connect people. use this template for multipurpose social activities like job, dating, posting, bloging and much more. Now join & Make Cool Friends around the world !!!
+                            </p>
+                            <div class="barcode">
+                                <figure><img src="../../../assets/images/resources/Barcode.jpg" alt=""></figure>
+                                <div class="app-download">
+                                    <span>Download Mobile App and Scan QR Code to login</span>
+                                    <ul class="colla-apps">
+                                        <li><a title="" href="https://play.google.com/store?hl=en"><img src="../../assets/images/android.png" alt="">android</a></li>
+                                        <li><a title="" href="https://www.apple.com/lae/ios/app-store/"><img src="../../assets/images/apple.png" alt="">iPhone</a></li>
+                                        <li><a title="" href="https://www.microsoft.com/store/apps"><img src="../../assets/images/windows.png" alt="">Windows</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div style="width: 350px" class="we-login-register">
+                            <div class="form-title">
+                                <i class="fa fa-key"></i>Sign Up
+                                <mat-error *ngIf="status" >{{status}}</mat-error>
+                            </div>
+<!--                            <form class="we-form" #f="ngForm" (ngSubmit)="f.form.valid && ngSubmit()" novalidate>-->
+                            <form class="we-form"  (ngSubmit)="ngSubmit()" novalidate [formGroup]="form">
+                                <!--Name-->
+
+                                <mat-form-field style="width: 250px;  " appearance="outline">
+                                    <mat-label>Name</mat-label>
+                                    <input matInput placeholder="Enter your fullname" formControlName="name">
+                                    <mat-icon color="primary" matSuffix>account_circle</mat-icon>
+                                    <mat-error *ngIf="form.get('name')?.hasError('required')">The username is required</mat-error>
+                                    <mat-error *ngIf="form.get('name')?.hasError('minlength')">The username more than 3 characters</mat-error>
+                                </mat-form-field>
+                                <br>
+                                <!--UserName-->
+                                <mat-form-field style="width: 250px" appearance="outline">
+                                    <mat-label>Username</mat-label>
+                                    <input matInput placeholder="Enter the username" formControlName="username">
+                                    <mat-icon color="primary" matSuffix>account_circle</mat-icon>
+                                    <mat-error *ngIf="form.get('username')?.hasError('required')">The username is required</mat-error>
+                                    <mat-error *ngIf="form.get('username')?.hasError('minlength')">The username more than 3 characters</mat-error>
+                                </mat-form-field>
+                                <br>
+                                <!--Email-->
+                                <mat-form-field style="width: 250px; padding-bottom: 10px" appearance="outline">
+                                    <mat-label>Email</mat-label>
+                                    <input matInput placeholder="Enter the email" formControlName="email">
+                                    <mat-icon color="primary" matSuffix>account_circle</mat-icon>
+                                    <mat-error *ngIf="form.get('email')?.hasError('required')">The email is required</mat-error>
+                                    <mat-error *ngIf="form.get('email')?.hasError('email')">The email invalid! Please try again-> ex: abc@gmail.com</mat-error>
+                                </mat-form-field>
+                                <br>
+                                <!--Password-->
+                                <mat-form-field style="width: 250px" appearance="outline">
+                                    <mat-label>Password</mat-label>
+                                    <input matInput [type]="hide ? 'password' : 'text'"  placeholder="Enter the password" formControlName="password">
+                                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label] = "'Hide password'" [attr.aria-pressed]="hide">
+                                        <mat-icon color="primary">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                    </button>
+                                    <mat-error *ngIf="form.get('password')?.hasError('required')">The password is required</mat-error>
+                                    <mat-error *ngIf="form.get('password')?.hasError('minlength')">The password more than 3 characters</mat-error>
+                                </mat-form-field>
+                                <br>
+<!--                                Confirmpassword-->
+                                <mat-form-field style="width: 250px" appearance="outline">
+                                    <mat-label>Enter Confirm Password</mat-label>
+                                    <input name="confirmPassword" formControlName="confirmPassword" matInput [type]="hide ? 'password' : 'text'" [errorStateMatcher]="matcher">
+                                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                                        <mat-icon color="accent">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                    </button>
+                                    <mat-error *ngIf="form.hasError('notSame')">
+                                        The Confirm Password does not match the New Password
+                                    </mat-error>
+                                </mat-form-field><br>
+                                <button [disabled]="form.invalid" mat-stroked-button color="primary" class="mat-button-toggle-group btn-outline-primary">Register
+                                    <mat-icon color="primary" matSuffix>add_circle_outline</mat-icon>
+                                </button>
+                            </form>
+                            <a data-ripple="" title="" href="#" class="with-smedia google"><i class="fa fa-google-plus"></i></a>
+                            <span>already have an account? <a class="we-account underline" routerLink="/login" title="">Sign in</a></span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>

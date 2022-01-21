@@ -1,0 +1,52 @@
+
+<mat-card>
+    <div class="form-title">
+        <i class="fa fa-key"></i>Edit your information
+        <mat-error *ngIf="status" >{{status}}</mat-error>
+    </div>
+    <form class="form-change-password" novalidate [formGroup]="form">
+        <!-- name-->
+        <div>
+            <label>Name</label>
+            <input matInput [placeholder]="nameAccount" [(ngModel)]="data.name" formControlName="name">
+            <mat-error *ngIf="form.get('name')?.hasError('required')">The name is required</mat-error>
+            <br>
+        </div>
+
+        <!--email-->
+        <div>
+            <label>Email</label>
+            <input matInput [(ngModel)]="data.email" [placeholder]="emailAccount"  formControlName="email">
+            <mat-error *ngIf="form.get('password')?.hasError('required')">The Email is required</mat-error>
+            <mat-error *ngIf="form.get('password')?.hasError('minlength')">The email more than 3 characters</mat-error>
+            <br>
+        </div>
+
+        <!-- hobbies-->
+        <div>
+            <label>Hobbies</label>
+            <input placeholder="enter your hobbies" [(ngModel)]="data.hobbies" name="hobbies" formControlName="hobbies" matInput>
+
+            <br>
+        </div>
+        <!-- Phone-->
+        <div>
+            <label>Phone</label>
+            <input placeholder="enter your phone" [(ngModel)]="data.phone" name="phone" formControlName="phone" matInput>
+            <br>
+        </div>
+        <!-- Address-->
+        <div>
+            <label>Address</label>
+            <input placeholder="enter your address" [(ngModel)]="data.address" name="address" formControlName="address" matInput >
+            <br>
+        </div>
+
+    </form>
+
+</mat-card>
+
+<div mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">No Thanks</button>
+    <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+</div>

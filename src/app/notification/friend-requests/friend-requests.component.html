@@ -1,0 +1,17 @@
+<ul class="drops-menu" *ngFor="let pending of listPending">
+    <li>
+        <div>
+            <figure>
+                <img style="height: 40px; width: 40px;" [src]="pending.avatar" alt="">
+            </figure>
+            <div class="mesg-meta">
+                <span><strong class="friend-request" routerLink="/home/profile/{{pending.id}}">{{pending.name}}</strong>  đã gửi lời mời kết bạn</span>
+<!--                <i>{{pending.}}</i>-->
+            </div>
+            <div class="add-del-friends">
+                <a (click)="agreePending(pending)" title=""><i class="fa fa-heart"></i></a>
+                <a (click)="refusePending(pending)" title=""><i class="fa fa-trash"></i></a>
+            </div>
+        </div>
+    </li>
+</ul>
